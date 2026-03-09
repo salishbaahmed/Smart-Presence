@@ -615,3 +615,27 @@ body {
 .progress {
     background: rgba(255, 255, 255, 0.06);
 }
+
+/* Cards with subtle border */
+.card {
+    background-color: var(--bg-primary);
+    border: 1px solid #2a2d3a;
+    border-radius: 12px;
+    color: #fff; /* All text inside cards is white */
+}
+
+/* Table header */
+.table thead th {
+    background-color: var(--bg-secondary);
+    color: #fff;
+}
+
+/* Table body (dummy names & details) */
+.table tbody td {
+    color: #fff; /* Makes student names and details white */
+}
+
+/* Table row hover */
+.table tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
