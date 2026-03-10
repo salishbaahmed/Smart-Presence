@@ -18,157 +18,7 @@
     <link rel="stylesheet" href="css/style.css">
 
     <style>
-        body {
-            background-color: #0d1017;
-            color: #e4e6eb;
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', sans-serif;
-        }
-
-        /* Layout Adjustments */
-        .app-layout {
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* Main Content wrapper */
-        .main-content {
-            margin-left: 240px;
-            /* var(--sidebar-width) */
-            padding: 2.25rem 2.5rem;
-            width: calc(100% - 240px);
-        }
-
-        /* Formulated exactly like image */
-        .sidebar {
-            width: 240px;
-            background-color: #12141c;
-            position: fixed;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            display: flex;
-            flex-direction: column;
-            border-right: 1px solid rgba(255, 255, 255, 0.03);
-            z-index: 10;
-        }
-
-        .sidebar-brand {
-            padding: 1.25rem 1.5rem;
-            font-size: 1.1rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            color: #e4e6eb;
-        }
-
-        .brand-icon {
-            background: #6c63ff;
-            color: white;
-            border-radius: 8px;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-        }
-
-        .sidebar-nav {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            flex-grow: 1;
-            margin-top: 1rem;
-        }
-
-        .sidebar-nav li {
-            margin: 0.1rem 0;
-        }
-
-        .sidebar-nav li a {
-            display: flex;
-            align-items: center;
-            gap: 0.7rem;
-            padding: 0.75rem 1rem;
-            margin: 0.2rem 1.25rem;
-            color: #8b8fa3;
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            border-radius: 8px;
-            transition: all 0.2s;
-        }
-
-        .sidebar-nav li a:hover {
-            background-color: rgba(255, 255, 255, 0.04);
-            color: #e4e6eb;
-        }
-
-        .sidebar-nav li a.active {
-            background-color: #6c63ff !important;
-            color: white !important;
-        }
-
-        .sidebar-nav li a.active i {
-            color: white !important;
-        }
-
-        .sidebar-nav li a i {
-            font-size: 1.1rem;
-            width: 20px;
-            text-align: center;
-        }
-
-        .sidebar-nav li.spacer {
-            margin-top: 1.5rem;
-        }
-
-        /* Footer styling matches image */
-        .sidebar-footer {
-            padding: 1.25rem;
-        }
-
-        /* Page Header */
-        .page-title {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin: 0;
-        }
-
-        .header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-
-        .badge-live-header {
-            background: rgba(46, 204, 113, 0.15);
-            color: #2ecc71;
-            padding: 0.4rem 0.85rem;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            letter-spacing: 0.5px;
-        }
-
-        .badge-live-header .dot {
-            width: 6px;
-            height: 6px;
-            background-color: #2ecc71;
-            border-radius: 50%;
-        }
-
-        /* Live Content Area */
+        /* Specific page styles only */
         .live-grid {
             display: grid;
             grid-template-columns: 1fr 300px;
@@ -177,11 +27,10 @@
             min-height: 600px;
         }
 
-        /* Video Area */
         .video-box {
-            background-color: #0b0c10;
+            background-color: var(--bg-video);
             border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
             position: relative;
@@ -202,7 +51,7 @@
         }
 
         .badge-live-red {
-            background-color: #e74c3c;
+            background-color: var(--danger);
             color: white;
             padding: 0.35rem 0.8rem;
             border-radius: 40px;
@@ -221,7 +70,7 @@
         }
 
         .student-tracking {
-            color: #8b8fa3;
+            color: var(--text-secondary);
             font-size: 0.85rem;
             font-weight: 500;
         }
@@ -241,19 +90,18 @@
         }
 
         .video-content h4 {
-            color: #8b8fa3;
+            color: var(--text-secondary);
             font-size: 1.1rem;
             font-weight: 600;
             margin-bottom: 0.4rem;
         }
 
         .video-content p {
-            color: #5a6072;
+            color: var(--text-muted);
             font-size: 0.85rem;
             margin: 0;
         }
 
-        /* Right Panel Cards */
         .right-column {
             display: flex;
             flex-direction: column;
@@ -262,29 +110,6 @@
             border-radius: 12px;
         }
 
-        .side-card {
-            background-color: #171923;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            padding: 1.25rem;
-        }
-
-        .card-title-icon {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            color: #e4e6eb;
-            font-size: 0.95rem;
-            font-weight: 600;
-            margin-bottom: 1.25rem;
-        }
-
-        .card-title-icon i {
-            color: #6c63ff;
-            font-size: 1.1rem;
-        }
-
-        /* Status Card Inner */
         .people-status {
             display: flex;
             flex-direction: column;
@@ -293,7 +118,7 @@
         }
 
         .people-count {
-            color: #2ecc71;
+            color: var(--success);
             font-size: 0.9rem;
             font-weight: 600;
             display: flex;
@@ -302,15 +127,14 @@
         }
 
         .people-sub {
-            color: #6c7280;
+            color: var(--text-muted);
             font-size: 0.75rem;
             margin-left: 1.3rem;
-            /* aligning with text next to icon */
         }
 
         .recent-tag {
             font-size: 0.75rem;
-            color: #6c7280;
+            color: var(--text-muted);
             margin-bottom: 0.6rem;
         }
 
@@ -332,7 +156,7 @@
             width: 32px;
             height: 32px;
             border-radius: 50%;
-            background-color: #6c63ff;
+            background-color: var(--accent);
             color: white;
             display: flex;
             align-items: center;
@@ -349,29 +173,28 @@
         }
 
         .user-name {
-            color: #e4e6eb;
+            color: var(--text-primary);
             font-size: 0.85rem;
             font-weight: 500;
             line-height: 1.2;
         }
 
         .user-time {
-            color: #6c7280;
+            color: var(--text-muted);
             font-size: 0.7rem;
             line-height: 1.2;
         }
 
-        /* Controls */
         .controls-label {
-            color: #e4e6eb;
+            color: var(--text-primary);
             font-size: 0.85rem;
             margin-bottom: 0.5rem;
             font-weight: 500;
         }
 
         .control-btn {
-            background-color: #12141c;
-            color: #e4e6eb;
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
             border: 1px solid rgba(255, 255, 255, 0.05);
             padding: 0.5rem 0.8rem;
             border-radius: 6px;
@@ -385,21 +208,20 @@
         }
 
         .control-btn.active {
-            background-color: #6c63ff;
+            background-color: var(--accent);
             color: white;
-            border-color: #6c63ff;
+            border-color: var(--accent);
         }
 
         .control-foot {
-            color: #6c7280;
+            color: var(--text-muted);
             font-size: 0.7rem;
             margin-top: 0.75rem;
             line-height: 1.4;
         }
 
-        /* System Info */
         .sys-title {
-            color: #e4e6eb;
+            color: var(--text-primary);
             font-size: 0.95rem;
             font-weight: 600;
             margin-bottom: 1rem;
@@ -414,11 +236,11 @@
         }
 
         .sys-label {
-            color: #8b8fa3;
+            color: var(--text-secondary);
         }
 
         .sys-val {
-            color: #e4e6eb;
+            color: var(--text-primary);
             display: flex;
             align-items: center;
             gap: 0.4rem;
@@ -426,13 +248,13 @@
         }
 
         .sys-val.success {
-            color: #2ecc71;
+            color: var(--success);
         }
 
         .sys-val .dot {
             width: 6px;
             height: 6px;
-            background-color: #2ecc71;
+            background-color: var(--success);
             border-radius: 50%;
         }
     </style>
@@ -449,10 +271,10 @@
                 SmartPresence
             </div>
             <ul class="sidebar-nav">
-                <li><a href="#"><i class="bi bi-grid-1x2"></i> Dashboard</a></li>
-                <li><a href="#" class="active"><i class="bi bi-camera-video"></i> Live View</a></li>
+                <li><a href="dashboard.html"><i class="bi bi-grid-1x2"></i> Dashboard</a></li>
+                <li><a href="live.html" class="active"><i class="bi bi-camera-video"></i> Live View</a></li>
                 <li><a href="#"><i class="bi bi-people"></i> Students</a></li>
-                <li><a href="#"><i class="bi bi-person-plus"></i> Enrollment</a></li>
+                <li><a href="enroll.html"><i class="bi bi-person-plus"></i> Enrollment</a></li>
                 <li><a href="#"><i class="bi bi-gear"></i> Settings</a></li>
                 <li><a href="#"><i class="bi bi-shield-check"></i> Users</a></li>
 
@@ -464,17 +286,18 @@
                     style="background:rgba(255,255,255,0.02); border-radius:6px; padding:0.5rem 0.6rem; display:flex; align-items:center; margin-bottom:0.5rem; font-size: 0.75rem;">
                     <span
                         style="display:inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #2ecc71; margin-right:8px; box-shadow: 0 0 6px rgba(46,204,113,0.5);"></span>
-                    <span style="color: #6c7280; font-weight: 500;">AI On - Auto - CS-10</span>
+                    <span style="color: var(--text-muted); font-weight: 500;">AI On - Auto - CS-10</span>
                 </div>
                 <div
                     style="background:rgba(255,255,255,0.02); border-radius:6px; padding:0.5rem 0.6rem; display:flex; align-items:center; justify-content:space-between; font-size: 0.8rem;">
                     <div style="display:flex; align-items:center; gap:0.5rem;">
-                        <i class="bi bi-person" style="color: #6c7280; font-size: 1rem;"></i>
-                        <span style="color:#e4e6eb; font-weight:500;">Admin Use</span>
+                        <i class="bi bi-person" style="color: var(--text-muted); font-size: 1rem;"></i>
+                        <span style="color: var(--text-primary); font-weight: 500;">Admin Use</span>
                         <span
-                            style="background:rgba(231,76,60,0.15); color:#e74c3c; font-size:0.5rem; padding:0.2rem 0.4rem; letter-spacing:0.5px; border-radius: 4px; font-weight: 600;">ADMIN</span>
+                            style="background:rgba(231,76,60,0.15); color:var(--danger); font-size:0.55rem; padding:0.2rem 0.4rem; letter-spacing:0.5px; border-radius: 4px; font-weight: 600;">ADMIN</span>
                     </div>
-                    <i class="bi bi-box-arrow-right" style="color: #6c7280; cursor:pointer; font-size:1rem;"></i>
+                    <i class="bi bi-box-arrow-right"
+                        style="color: var(--text-muted); cursor:pointer; font-size:1rem;"></i>
                 </div>
             </div>
         </nav>
@@ -564,7 +387,7 @@
 
                         <div class="control-btn">
                             <span>Speed</span>
-                            <i class="bi bi-chevron-down" style="color: #6c7280;"></i>
+                            <i class="bi bi-chevron-down" style="color: var(--text-muted);"></i>
                         </div>
                         <div class="control-btn active">
                             <span>Distance</span>

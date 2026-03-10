@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,6 +19,7 @@
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -26,78 +28,104 @@
 
         <!-- Sidebar -->
         <nav class="sidebar">
-            <div>
-                <div class="sidebar-brand">
-                    <div class="brand-icon">
-                        <i class="bi bi-person"></i>
-                    </div>
-                    SmartPresence
+            <div class="sidebar-brand">
+                <div class="brand-icon">
+                    <i class="bi bi-person"></i>
                 </div>
+                SmartPresence
+            </div>
 
-                <ul class="sidebar-nav mt-2">
-                    <li><a href="#" class="active"><i class="bi bi-grid-1x2"></i> Dashboard</a></li>
-                    <li><a href="#"><i class="bi bi-camera-video"></i> Live View</a></li>
-                    <li><a href="#"><i class="bi bi-people"></i> Students</a></li>
-                    <li><a href="#"><i class="bi bi-person-plus"></i> Enrollment</a></li>
-                    <li><a href="#"><i class="bi bi-gear"></i> Settings</a></li>
-                    <li><a href="#"><i class="bi bi-shield-check"></i> Users</a></li>
-                    <li class="mt-4"><a href="#"><i class="bi bi-bug"></i> Report Issue</a></li>
-                </ul>
+            <ul class="sidebar-nav">
+                <li><a href="dashboard.html" class="active"><i class="bi bi-grid-1x2"></i> Dashboard</a></li>
+                <li><a href="live.html"><i class="bi bi-camera-video"></i> Live View</a></li>
+                <li><a href="#"><i class="bi bi-people"></i> Students</a></li>
+                <li><a href="enroll.html"><i class="bi bi-person-plus"></i> Enrollment</a></li>
+                <li><a href="#"><i class="bi bi-gear"></i> Settings</a></li>
+                <li><a href="#"><i class="bi bi-shield-check"></i> Users</a></li>
+                <li class="spacer"><a href="#"><i class="bi bi-bug"></i> Report Issue</a></li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <div
+                    style="background:rgba(255,255,255,0.02); border-radius:6px; padding:0.5rem 0.6rem; display:flex; align-items:center; margin-bottom:0.5rem; font-size: 0.75rem;">
+                    <span
+                        style="display:inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #2ecc71; margin-right:8px; box-shadow: 0 0 6px rgba(46,204,113,0.5);"></span>
+                    <span style="color: var(--text-muted); font-weight: 500;">AI On - Auto - CS-10</span>
+                </div>
+                <div
+                    style="background:rgba(255,255,255,0.02); border-radius:6px; padding:0.5rem 0.6rem; display:flex; align-items:center; justify-content:space-between; font-size: 0.8rem;">
+                    <div style="display:flex; align-items:center; gap:0.5rem;">
+                        <i class="bi bi-person" style="color: var(--text-muted); font-size: 1rem;"></i>
+                        <span style="color: var(--text-primary); font-weight: 500;">Admin Use</span>
+                        <span
+                            style="background:rgba(231,76,60,0.15); color:var(--danger); font-size:0.55rem; padding:0.2rem 0.4rem; letter-spacing:0.5px; border-radius: 4px; font-weight: 600;">ADMIN</span>
+                    </div>
+                    <i class="bi bi-box-arrow-right"
+                        style="color: var(--text-muted); cursor:pointer; font-size:1rem;"></i>
+                </div>
             </div>
         </nav>
 
         <!-- Main Content -->
         <main class="main-content">
-            <div class="page-header d-flex justify-content-between align-items-center mb-4">
-                <h1>
+            <div class="header-top">
+                <h1 class="page-title">
                     <i class="bi bi-speedometer2"></i> Dashboard
                 </h1>
-                <input type="date" id="dateFilter" class="form-control form-control-sm" style="width:180px;">
+                <input type="date" id="dateFilter" class="form-control" style="width:180px;">
             </div>
 
             <!-- Stats Cards -->
-            <div class="row g-3 mb-4">
-                <div class="col-md-3">
-                    <div class="card text-center p-3">
-                        <i class="bi bi-people fs-2 text-primary"></i>
-                        <h3 id="totalStudents">--</h3>
-                        <p>Total Students</p>
+            <div class="stats-grid mb-4">
+                <div class="stat-card stat-card--primary">
+                    <div class="stat-icon">
+                        <i class="bi bi-people"></i>
+                    </div>
+                    <div>
+                        <span class="stat-value" id="totalStudents">--</span>
+                        <span class="stat-label">Total Students</span>
                     </div>
                 </div>
 
-                <div class="col-md-3">
-                    <div class="card text-center p-3">
-                        <i class="bi bi-person-check fs-2 text-success"></i>
-                        <h3 id="presentToday">--</h3>
-                        <p>Present Today</p>
+                <div class="stat-card stat-card--success">
+                    <div class="stat-icon">
+                        <i class="bi bi-person-check"></i>
+                    </div>
+                    <div>
+                        <span class="stat-value" id="presentToday">--</span>
+                        <span class="stat-label">Present Today</span>
                     </div>
                 </div>
 
-                <div class="col-md-3">
-                    <div class="card text-center p-3">
-                        <i class="bi bi-person-x fs-2 text-danger"></i>
-                        <h3 id="absentToday">--</h3>
-                        <p>Absent Today</p>
+                <div class="stat-card stat-card--danger">
+                    <div class="stat-icon">
+                        <i class="bi bi-person-x"></i>
+                    </div>
+                    <div>
+                        <span class="stat-value" id="absentToday">--</span>
+                        <span class="stat-label">Absent Today</span>
                     </div>
                 </div>
 
-                <div class="col-md-3">
-                    <div class="card text-center p-3">
-                        <i class="bi bi-journal-text fs-2 text-info"></i>
-                        <h3 id="totalLogs">--</h3>
-                        <p>Total Logs</p>
+                <div class="stat-card stat-card--info">
+                    <div class="stat-icon">
+                        <i class="bi bi-journal-text"></i>
+                    </div>
+                    <div>
+                        <span class="stat-value" id="totalLogs">--</span>
+                        <span class="stat-label">Total Logs</span>
                     </div>
                 </div>
             </div>
 
             <!-- Chart -->
-            <div class="card mb-4">
-                <div class="card-header d-flex justify-content-between">
-                    <h5>Attendance Trend</h5>
+            <div class="card glass-card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Attendance Trend</h5>
                     <div class="btn-group btn-group-sm">
-                        <button class="btn btn-outline-secondary active" onclick="loadChart(7,this)">7 Days</button>
-                        <button class="btn btn-outline-secondary" onclick="loadChart(14,this)">14 Days</button>
-                        <button class="btn btn-outline-secondary" onclick="loadChart(30,this)">30 Days</button>
+                        <button class="btn btn-outline-light active" onclick="loadChart(7,this)">7 Days</button>
+                        <button class="btn btn-outline-light" onclick="loadChart(14,this)">14 Days</button>
+                        <button class="btn btn-outline-light" onclick="loadChart(30,this)">30 Days</button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -106,38 +134,49 @@
             </div>
 
             <!-- Manual Entry + Table -->
-            <div class="row g-3">
-
+            <div class="row g-4">
                 <div class="col-md-4">
-                    <div class="card p-3">
-                        <h5>Manual Entry</h5>
-                        <select id="manualStudent" class="form-select mb-2">
-                            <option value="1">Alice Johnson</option>
-                            <option value="2">Bob Smith</option>
-                            <option value="3">Charlie Brown</option>
-                            <option value="4">Diana Prince</option>
-                        </select>
+                    <div class="card glass-card p-4">
+                        <h5 class="mb-3">Manual Entry</h5>
+                        <div class="mb-3">
+                            <label class="form-label small">Select Student</label>
+                            <select id="manualStudent" class="form-select">
+                                <option value="1">Alice Johnson</option>
+                                <option value="2">Bob Smith</option>
+                                <option value="3">Charlie Brown</option>
+                                <option value="4">Diana Prince</option>
+                            </select>
+                        </div>
 
-                        <select id="manualStatus" class="form-select mb-2">
-                            <option>On Time</option>
-                            <option>Present</option>
-                            <option>Late</option>
-                            <option>Absent</option>
-                        </select>
+                        <div class="mb-3">
+                            <label class="form-label small">Status</label>
+                            <select id="manualStatus" class="form-select">
+                                <option>On Time</option>
+                                <option>Present</option>
+                                <option>Late</option>
+                                <option>Absent</option>
+                            </select>
+                        </div>
 
-                        <input type="text" id="manualNotes" class="form-control mb-2" placeholder="Notes">
-                        <button class="btn btn-primary w-100" onclick="submitManual()">Submit</button>
+                        <div class="mb-4">
+                            <label class="form-label small">Notes</label>
+                            <input type="text" id="manualNotes" class="form-control" placeholder="Optional notes...">
+                        </div>
+
+                        <button class="btn btn-primary w-100" onclick="submitManual()">
+                            <i class="bi bi-plus-circle me-1"></i> Submit Entry
+                        </button>
                     </div>
                 </div>
 
                 <div class="col-md-8">
-                    <div class="card">
+                    <div class="card glass-card">
                         <div class="card-header">
-                            <h5>Attendance Records</h5>
+                            <h5 class="mb-0">Attendance Records</h5>
                         </div>
 
                         <div class="table-responsive">
-                            <table class="table">
+                            <table class="table table-hover mb-0">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -145,7 +184,7 @@
                                         <th>Time</th>
                                         <th>Status</th>
                                         <th>Source</th>
-                                        <th>Actions</th>
+                                        <th class="text-end px-4">Actions</th>
                                     </tr>
                                 </thead>
 
@@ -154,40 +193,47 @@
                                         <td>1</td>
                                         <td>Alice Johnson</td>
                                         <td>08:15 AM</td>
-                                        <td>Present</td>
+                                        <td><span class="badge bg-ontime">On Time</span></td>
                                         <td>Manual</td>
-                                        <td><button class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button></td>
+                                        <td class="text-end px-4"><button
+                                                class="btn btn-sm btn-outline-danger btn-xs"><i
+                                                    class="bi bi-trash"></i></button></td>
                                     </tr>
                                     <tr>
                                         <td>2</td>
                                         <td>Bob Smith</td>
                                         <td>08:20 AM</td>
-                                        <td>Late</td>
+                                        <td><span class="badge bg-late">Late</span></td>
                                         <td>Manual</td>
-                                        <td><button class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button></td>
+                                        <td class="text-end px-4"><button
+                                                class="btn btn-sm btn-outline-danger btn-xs"><i
+                                                    class="bi bi-trash"></i></button></td>
                                     </tr>
                                     <tr>
                                         <td>3</td>
                                         <td>Charlie Brown</td>
                                         <td>08:00 AM</td>
-                                        <td>On Time</td>
+                                        <td><span class="badge bg-ontime">On Time</span></td>
                                         <td>Manual</td>
-                                        <td><button class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button></td>
+                                        <td class="text-end px-4"><button
+                                                class="btn btn-sm btn-outline-danger btn-xs"><i
+                                                    class="bi bi-trash"></i></button></td>
                                     </tr>
                                     <tr>
                                         <td>4</td>
                                         <td>Diana Prince</td>
                                         <td>--</td>
-                                        <td>Absent</td>
+                                        <td><span class="badge bg-absent">Absent</span></td>
                                         <td>Manual</td>
-                                        <td><button class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button></td>
+                                        <td class="text-end px-4"><button
+                                                class="btn btn-sm btn-outline-danger btn-xs"><i
+                                                    class="bi bi-trash"></i></button></td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-
             </div>
 
         </main>
@@ -239,10 +285,25 @@
                 data: {
                     labels: data.labels,
                     datasets: [
-                        { label: 'Present', data: data.present, backgroundColor: '#2ecc71' },
-                        { label: 'Late', data: data.late, backgroundColor: '#f39c12' },
-                        { label: 'Absent', data: data.absent, backgroundColor: '#e74c3c' }
+                        { label: 'Present', data: data.present, backgroundColor: '#2ecc71', borderRadius: 4 },
+                        { label: 'Late', data: data.late, backgroundColor: '#f39c12', borderRadius: 4 },
+                        { label: 'Absent', data: data.absent, backgroundColor: '#e74c3c', borderRadius: 4 }
                     ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#8b8fa3',
+                                font: { family: 'Inter' }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: { ticks: { color: '#8b8fa3' }, grid: { display: false } },
+                        y: { ticks: { color: '#8b8fa3' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+                    }
                 }
             });
         }
@@ -252,4 +313,5 @@
     </script>
 
 </body>
+
 </html>

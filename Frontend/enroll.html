@@ -1,52 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enrollment - SmartPresence</title>
-    
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
-    
-    <style>
-        /* Custom UI matching the image exactly */
-        .camera-fallback {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            height: 100%;
-            width: 100%;
-        }
-        .camera-fallback i {
-            font-size: 3rem;
-            margin-bottom: 0.8rem;
-            color: #4b5162;
-        }
-        .camera-fallback h6 {
-            font-weight: 500;
-            color: #8b8fa3;
-            margin-bottom: 0.3rem;
-            font-size: 0.95rem;
-        }
-        .camera-fallback p {
-            font-size: 0.8rem;
-            margin: 0;
-            color: #6c7280;
-        }
 
+    <style>
         .enroll-video-container {
-            background-color: #1a1d27;
-            border-radius: 8px;
+            background-color: var(--bg-video);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
             overflow: hidden;
             aspect-ratio: 16/10;
             display: flex;
@@ -55,60 +30,40 @@
             position: relative;
         }
 
-        /* Form Inputs */
-        .form-control {
-            background-color: #15171e !important;
-            border: 1px solid rgba(255,255,255,0.05) !important;
-            color: #e4e6eb !important;
-            border-radius: 6px;
-            padding: 0.6rem 1rem;
-            font-size: 0.9rem;
-        }
-        .form-control::placeholder {
-            color: #5a6072 !important;
-        }
-        .form-control:focus {
-            border-color: var(--accent) !important;
-            box-shadow: 0 0 0 0.2rem rgba(108, 99, 255, 0.2) !important;
+        .enroll-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
-        /* File Input */
-        input[type="file"].custom-file-input {
-            color: #8b8fa3;
-            font-size: 0.85rem;
-            background: transparent !important;
-            border: none !important;
-            padding: 0 !important;
-            width: auto;
-        }
-        input[type="file"].custom-file-input::file-selector-button {
-            background-color: var(--accent);
-            color: white;
-            border: none;
-            padding: 0.45rem 1rem;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-right: 1rem;
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: background-color 0.2s;
-        }
-        input[type="file"].custom-file-input::file-selector-button:hover {
-            background-color: #5a52e0;
+        .camera-fallback {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--text-muted);
         }
 
-        /* Bullet Points */
+        .camera-fallback i {
+            font-size: 3rem;
+            margin-bottom: 0.8rem;
+        }
+
         .tips-list {
             list-style-type: none;
             padding-left: 0;
+            margin-bottom: 0;
         }
+
         .tips-list li {
             position: relative;
             padding-left: 1.5rem;
             margin-bottom: 0.75rem;
-            color: #8b8fa3;
+            color: var(--text-secondary);
             font-size: 0.85rem;
         }
+
         .tips-list li::before {
             content: "•";
             color: var(--accent);
@@ -120,91 +75,77 @@
             transform: translateY(-50%);
         }
 
-        /* General Refinements */
-        .card-header {
-            border-bottom: none !important;
+        input[type="file"].custom-file-input {
+            color: var(--text-muted);
+            font-size: 0.85rem;
         }
-        .card {
-            background: #12141c !important; 
-        }
-        .btn {
-            border-radius: 6px;
-            font-weight: 500;
-        }
-        /* Sidebar layout customization */
-        .sidebar {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .sidebar-brand {
-            border-bottom: none;
-        }
-        .brand-icon {
-            background: var(--accent);
+
+        input[type="file"].custom-file-input::file-selector-button {
+            background-color: var(--accent);
             color: white;
-            border-radius: 8px;
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
+            border: none;
+            padding: 0.45rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-right: 1rem;
+            font-weight: 500;
+            font-size: 0.85rem;
+            transition: background-color 0.2s;
         }
-        /* Aligning icons strictly */
-        .sidebar-nav li a {
-            padding: 0.75rem 1.5rem;
-            margin: 0.1rem 0;
-        }
-        .sidebar-nav li a i {
-            margin-right: 0.2rem;
+
+        input[type="file"].custom-file-input::file-selector-button:hover {
+            background-color: #5a52e0;
         }
     </style>
 </head>
+
 <body>
     <div class="app-layout">
         <!-- Sidebar -->
         <nav class="sidebar">
-            <div>
-                <div class="sidebar-brand">
-                    <div class="brand-icon">
-                        <i class="bi bi-person"></i>
-                    </div>
-                    SmartPresence
+            <div class="sidebar-brand">
+                <div class="brand-icon">
+                    <i class="bi bi-person"></i>
                 </div>
-                <ul class="sidebar-nav mt-2">
-                    <li><a href="#"><i class="bi bi-grid-1x2"></i> Dashboard</a></li>
-                    <li><a href="#"><i class="bi bi-camera-video"></i> Live View</a></li>
-                    <li><a href="#"><i class="bi bi-people"></i> Students</a></li>
-                    <li><a href="#" class="active"><i class="bi bi-person-plus"></i> Enrollment</a></li>
-                    <li><a href="#"><i class="bi bi-gear"></i> Settings</a></li>
-                    <li><a href="#"><i class="bi bi-shield-check"></i> Users</a></li>
-                    
-                    <li class="mt-4"><a href="#"><i class="bi bi-bug"></i> Report Issue</a></li>
-                </ul>
+                SmartPresence
             </div>
-            
-            <div class="sidebar-footer" style="padding: 1rem; border-top: none;">
-                <div style="background:rgba(255,255,255,0.03); border-radius:8px; padding:0.6rem 0.8rem; display:flex; align-items:center; margin-bottom:0.5rem; font-size: 0.8rem;">
-                    <span class="indicator-dot dot-active" style="margin-right:8px; width: 6px; height: 6px;"></span>
-                    <span style="color: var(--text-secondary);">AI On - Auto - CS-10</span>
+            <ul class="sidebar-nav">
+                <li><a href="dashboard.html"><i class="bi bi-grid-1x2"></i> Dashboard</a></li>
+                <li><a href="live.html"><i class="bi bi-camera-video"></i> Live View</a></li>
+                <li><a href="#"><i class="bi bi-people"></i> Students</a></li>
+                <li><a href="enroll.html" class="active"><i class="bi bi-person-plus"></i> Enrollment</a></li>
+                <li><a href="#"><i class="bi bi-gear"></i> Settings</a></li>
+                <li><a href="#"><i class="bi bi-shield-check"></i> Users</a></li>
+
+                <li class="spacer"><a href="#"><i class="bi bi-bug"></i> Report Issue</a></li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <div
+                    style="background:rgba(255,255,255,0.02); border-radius:6px; padding:0.5rem 0.6rem; display:flex; align-items:center; margin-bottom:0.5rem; font-size: 0.75rem;">
+                    <span
+                        style="display:inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #2ecc71; margin-right:8px; box-shadow: 0 0 6px rgba(46,204,113,0.5);"></span>
+                    <span style="color: var(--text-muted); font-weight: 500;">AI On - Auto - CS-10</span>
                 </div>
-                <div style="background:rgba(255,255,255,0.03); border-radius:8px; padding:0.6rem 0.8rem; display:flex; align-items:center; justify-content:space-between; font-size: 0.85rem;">
+                <div
+                    style="background:rgba(255,255,255,0.02); border-radius:6px; padding:0.5rem 0.6rem; display:flex; align-items:center; justify-content:space-between; font-size: 0.8rem;">
                     <div style="display:flex; align-items:center; gap:0.5rem;">
-                        <i class="bi bi-person text-secondary"></i>
-                        <span style="color:var(--text-primary); font-weight:500;">Admin Use</span>
-                        <span class="badge" style="background:rgba(231,76,60,0.2) !important; color:#e74c3c; font-size:0.55rem; padding:0.3em 0.5em; letter-spacing:0.5px;">ADMIN</span>
+                        <i class="bi bi-person" style="color: var(--text-muted); font-size: 1rem;"></i>
+                        <span style="color: var(--text-primary); font-weight: 500;">Admin Use</span>
+                        <span
+                            style="background:rgba(231,76,60,0.15); color:var(--danger); font-size:0.55rem; padding:0.2rem 0.4rem; letter-spacing:0.5px; border-radius: 4px; font-weight: 600;">ADMIN</span>
                     </div>
-                    <i class="bi bi-box-arrow-right text-secondary" style="cursor:pointer; font-size:1.1rem; opacity: 0.8;"></i>
+                    <i class="bi bi-box-arrow-right"
+                        style="color: var(--text-muted); cursor:pointer; font-size:1rem;"></i>
                 </div>
             </div>
         </nav>
 
         <!-- Main Content -->
         <main class="main-content">
-            <div class="page-header" style="margin-bottom: 2rem;">
-                <h1 style="font-size: 1.8rem; font-weight: 700;">
-                    <i class="bi bi-person-plus" style="font-size: 1.5rem; vertical-align: middle;"></i> Web Enrollment
+            <div class="header-top">
+                <h1 class="page-title">
+                    <i class="bi bi-person-plus"></i> Web Enrollment
                 </h1>
             </div>
 
@@ -212,37 +153,40 @@
                 <!-- Camera Capture -->
                 <div class="col-md-7">
                     <div class="card glass-card h-100">
-                        <div class="card-header pb-0 pt-4 px-4">
-                            <h5 style="font-size: 1.05rem; font-weight: 600;" class="mb-0">
-                                <i class="bi bi-camera text-accent pe-2"></i> Capture Photo
+                        <div class="card-header p-4 pb-0">
+                            <h5 class="mb-0">
+                                <i class="bi bi-camera me-2 text-accent"></i> Capture Photo
                             </h5>
                         </div>
-                        <div class="card-body text-center p-4">
+                        <div class="card-body p-4 text-center">
                             <div class="enroll-video-container mb-4" id="videoContainer">
-                                <video id="enrollVideo" autoplay playsinline class="enroll-video" style="display:none;"></video>
+                                <video id="enrollVideo" autoplay playsinline class="enroll-video"
+                                    style="display:none;"></video>
                                 <canvas id="enrollCanvas" style="display:none;"></canvas>
                                 <img id="capturedPhoto" class="enroll-video" style="display:none;">
-                                
-                                <div id="cameraFallback" class="camera-fallback" style="position: absolute; inset: 0;">
+
+                                <div id="cameraFallback" class="camera-fallback">
                                     <i class="bi bi-camera"></i>
                                     <h6>Camera unavailable</h6>
                                     <p>Use the upload option below</p>
                                 </div>
                             </div>
-                            
-                            <div class="d-flex justify-content-center gap-2 mb-4">
-                                <button class="btn btn-accent px-4 py-2 text-white" id="captureBtn" onclick="capturePhoto()" style="background: #5a52e0; border-radius: 6px; box-shadow: none;">
+
+                            <div class="d-flex justify-content-center gap-3 mb-4">
+                                <button class="btn btn-primary px-4" id="captureBtn" onclick="capturePhoto()">
                                     <i class="bi bi-camera me-1"></i> Capture
                                 </button>
-                                <button class="btn btn-outline-light px-4 py-2" id="retakeBtn" onclick="retakePhoto()" style="display:none; border-radius: 6px;">
+                                <button class="btn btn-outline-light px-4" id="retakeBtn" onclick="retakePhoto()"
+                                    style="display:none;">
                                     <i class="bi bi-arrow-counterclockwise me-1"></i> Retake
                                 </button>
                             </div>
-                            
+
                             <div class="mt-4 pt-2">
-                                <p class="mb-3 fs-6" style="color: #6c7280; font-size: 0.9rem !important;">Or upload a photo:</p>
-                                <div class="d-flex justify-content-center pb-2">
-                                    <input type="file" accept="image/*" id="photoUpload" class="custom-file-input" onchange="handleUpload(this)">
+                                <p class="mb-3 small text-muted">Or upload a photo:</p>
+                                <div class="d-flex justify-content-center">
+                                    <input type="file" accept="image/*" id="photoUpload" class="custom-file-input"
+                                        onchange="handleUpload(this)">
                                 </div>
                             </div>
                         </div>
@@ -251,46 +195,40 @@
 
                 <!-- Enrollment Form -->
                 <div class="col-md-5">
-                    <div class="card glass-card mb-4" style="height: auto;">
-                        <div class="card-header pb-0 pt-4 px-4">
-                            <h5 style="font-size: 1.05rem; font-weight: 600;" class="mb-0">Student Details</h5>
+                    <div class="card glass-card mb-4">
+                        <div class="card-header p-4 pb-0">
+                            <h5 class="mb-0">Student Details</h5>
                         </div>
                         <div class="card-body p-4">
                             <div class="mb-3">
-                                <label class="form-label mb-1" style="font-size: 0.85rem; font-weight: 500;">
-                                    Full Name <span class="text-danger">*</span>
-                                </label>
-                                <input type="text" id="enrollName" class="form-control" placeholder="First and Last Name">
+                                <label class="form-label small">Full Name <span class="text-danger">*</span></label>
+                                <input type="text" id="enrollName" class="form-control"
+                                    placeholder="First and Last Name">
                             </div>
                             <div class="mb-3">
-                                <label class="form-label mb-1" style="font-size: 0.85rem; font-weight: 500;">
-                                    Student ID <span class="text-danger">*</span>
-                                </label>
-                                <input type="text" id="enrollSid" class="form-control" placeholder="e.g. 2024-CS-101" required>
+                                <label class="form-label small">Student ID <span class="text-danger">*</span></label>
+                                <input type="text" id="enrollSid" class="form-control" placeholder="e.g. 2024-CS-101">
                             </div>
                             <div class="mb-4">
-                                <label class="form-label mb-1" style="font-size: 0.85rem; font-weight: 500;">
-                                    Email <span class="text-danger">*</span>
-                                </label>
-                                <input type="email" id="enrollEmail" class="form-control" placeholder="student@university.edu" required>
+                                <label class="form-label small">Email <span class="text-danger">*</span></label>
+                                <input type="email" id="enrollEmail" class="form-control"
+                                    placeholder="student@university.edu">
                             </div>
                             <div id="enrollStatus" class="alert small py-2" style="display:none;"></div>
-                            
-                            <!-- Notice that the image had "Enroll Student" without the enrollBtn disabled necessarily, but we can make it look enabled. -->
-                            <!-- In the image, the button is a filled purple block -->
-                            <button class="btn btn-accent w-100 py-2 text-white" id="enrollBtn" style="background: #5a52e0; border-radius: 6px; font-weight: 500; font-size: 0.95rem; box-shadow: none;">
+
+                            <button class="btn btn-primary w-100 py-2" id="enrollBtn">
                                 <i class="bi bi-person-plus me-1"></i> Enroll Student
                             </button>
                         </div>
                     </div>
 
                     <div class="card glass-card">
-                        <div class="card-header pb-0 pt-4 px-4 d-flex align-items-center mb-2">
-                            <i class="bi bi-info-circle text-accent pe-2" style="font-size: 1rem;"></i>
-                            <h6 style="font-size: 1rem; font-weight: 500;" class="mb-0">Tips</h6>
+                        <div class="card-header p-4 pb-0 d-flex align-items-center mb-2">
+                            <i class="bi bi-info-circle text-accent me-2"></i>
+                            <h6 class="mb-0">Registration Tips</h6>
                         </div>
-                        <div class="card-body px-4 pb-4 pt-1">
-                            <ul class="tips-list mb-0">
+                        <div class="card-body p-4 pt-2">
+                            <ul class="tips-list">
                                 <li>Face the camera directly with good lighting</li>
                                 <li>Only one person should be in the frame</li>
                                 <li>Remove hats or sunglasses</li>
@@ -305,7 +243,7 @@
 
     <!-- Bootstrap Bundle JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <script>
         let imageData = null;
         let videoStream = null;
@@ -334,7 +272,7 @@
 
             canvas.width = video.videoWidth || 640;
             canvas.height = video.videoHeight || 480;
-            if(video.videoWidth) {
+            if (video.videoWidth) {
                 canvas.getContext('2d').drawImage(video, 0, 0);
                 imageData = canvas.toDataURL('image/jpeg', 0.9);
                 photo.src = imageData;
@@ -355,7 +293,7 @@
             document.getElementById('captureBtn').style.display = 'inline-block';
             document.getElementById('retakeBtn').style.display = 'none';
             imageData = null;
-            
+
             if (videoStream) {
                 video.style.display = 'block';
             } else {
@@ -393,4 +331,5 @@
         startCamera();
     </script>
 </body>
+
 </html>
