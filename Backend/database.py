@@ -32,3 +32,40 @@ def create_database():
     conn.close()
 
 create_database()
+
+
+
+# ----------------------------------------
+# FUNCTIONS IMPLEMENTATION
+# ----------------------------------------
+
+
+# Add student
+def add_student(name, face_id):
+    conn = sqlite3.connect("attendance.db")
+    cursor = conn.cursor()
+
+    cursor.execute("INSERT INTO students (name, face_id) VALUES (?, ?)", (name, face_id))
+
+    conn.commit()
+    conn.close()
+
+# Test add student function
+add_student("Ali", "ali_01")
+add_student("Sara", "sara_01")
+
+def get_students():
+    conn = sqlite3.connect("attendance.db")
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM students")
+    students = cursor.fetchall()
+
+    conn.close()
+    return students
+
+# Test Get students function
+print(get_students())
+
+
+
