@@ -1,4 +1,5 @@
 import sqlite3
+from datetime import datetime
 
 
 
@@ -67,5 +68,59 @@ def get_students():
 # Test Get students function
 print(get_students())
 
+
+
+
+
+
+# ----------------------------------------
+# ATTENDANCE FUNCTIONS IMPLEMENTATION
+# ----------------------------------------
+
+
+# Create Attendance
+def mark_attendance(student_name):
+    conn = sqlite3.connect("attendance.db")
+    cursor = conn.cursor()
+
+    current_date = datetime.now().strftime("%Y-%m-%d")
+    current_time = datetime.now().strftime("%H:%M:%S")
+
+    cursor.execute("""
+    SELECT * FROM attendance
+    WHERE student_name=? AND date=?
+    """, (student_name, current_date))
+
+    existing = cursor.fetchone()
+
+    if not existing:
+        cursor.execute("""
+        INSERT INTO attendance (student_name, date, time, status)
+        VALUES (?, ?, ?, ?)
+        """, (student_name, current_date, current_time, "Present"))
+
+    conn.commit()
+    conn.close()
+
+
+# Test mark attendance function
+mark_attendance("Ali")
+mark_attendance("Sara")
+
+
+
+# Get Attendance List
+def get_attendance():
+    conn = sqlite3.connect("attendance.db")
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM attendance")
+    records = cursor.fetchall()
+
+    conn.close()
+    return records
+
+# Test Get Attendance List function
+print("\nAttendance List: ", get_attendance())
 
 
