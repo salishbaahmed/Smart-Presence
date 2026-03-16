@@ -70,9 +70,6 @@ print(get_students())
 
 
 
-
-
-
 # ----------------------------------------
 # ATTENDANCE FUNCTIONS IMPLEMENTATION
 # ----------------------------------------
@@ -124,3 +121,11 @@ def get_attendance():
 print("\nAttendance List: ", get_attendance())
 
 
+
+# ----------------------------------------
+# FACE RECOGNITION FUNCTION
+# ----------------------------------------
+
+
+recognized_student = "Ali"
+mark_attendance(recognized_student)
