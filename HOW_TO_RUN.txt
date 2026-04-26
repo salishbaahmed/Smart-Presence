@@ -1,0 +1,63 @@
+SMART PRESENCE - HOW TO RUN 
+
+1. Install Python
+   Make sure Python 3.10 is installed on your system.
+
+2. Install Dependencies
+   Open terminal in backend folder and run:
+   py -3.10 -m pip install -r requirements.txt
+-----------------------------------------------------
+
+3. Prepare Dataset
+   Create a folder named "dataset" inside backend.
+   Inside dataset, create folders for each student:
+   Example:
+   dataset/
+   Ali/
+   img1.jpg
+   img2.jpg
+   Sara/
+   img1.jpg
+   img2.jpg
+
+4. Encode Faces
+   Run the following command to generate encodings:
+   py -3.10 encode_faces.py
+
+This will create:
+encodings.pickle
+
+----------------------------------------------------
+
+5. Run Face Recognition
+   Start the recognition system using:
+   py -3.10 recognize_faces.py
+
+----------------------------------------------------
+6. Controls
+
+* Webcam will open automatically
+* Press ESC key to close the camera window
+
+7. Run Backend Server (Optional)
+   To start Flask backend:
+   py -3.10 app.py
+
+Then open browser:
+http://127.0.0.1:5000
+
+---------------------------------------------------
+
+OUTPUT:
+
+* Recognized student names will appear on screen
+* Names will also be printed in terminal
+* Duplicate detection is prevented
+
+---------------------------------------------------
+
+NOTES:
+
+* Ensure good lighting for accurate recognition
+* Dataset images should be clear and front-facing
+* encodings.pickle must exist before running recognition
