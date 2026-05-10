@@ -304,6 +304,12 @@ class FaceSystemThreaded:
     # ── Standalone Mode ──────────────────────────────────
 
     def start(self):
+        """
+        starts the threaded system.
+        Includes robust retry mechanism for camera hardware
+        to handle slow-wake devices or stream delays.
+        """
+        
         log.info("Starting Threaded Recognition System...")
         log.info("  > Hotkeys: 's' = Toggle Scale | 'd' = Toggle Debug | 'q' = Quit")
 
@@ -323,6 +329,7 @@ class FaceSystemThreaded:
             try:
                 cap = cv2.VideoCapture(source)
                 if not cap.isOpened():
+                    # Hardware recovery: wait for OS to release camera resource
                     log.warning("Camera failed to open. Retrying in 2s...")
                     cap = None
                     time.sleep(2)
