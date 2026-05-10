@@ -17,6 +17,7 @@ build/
 venv/
 env/
 .Python
+.venv
 
 # ── Environment Config (SENSITIVE) ──
 .env
