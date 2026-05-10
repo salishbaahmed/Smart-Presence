@@ -68,13 +68,20 @@ class MediaPipeDetector(BaseDetector):
         return boxes
 
 class HaarDetector(BaseDetector):
+    """"
+    a face detector implementation using OpenCV's Haar cascade calssifier.
+    This is a classic, lightweigjt approach suitable for real-time detection 
+    on low-power hardware.
+    """"
     def __init__(self):
+        # path to pre trained Haar Cascade XML file provided by OpenCV
         cascade_path = cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'
         self.face_cascade = cv2.CascadeClassifier(cascade_path)
         if self.face_cascade.empty():
             raise ImportError(f"Haar Cascade file not found at {cascade_path}")
 
     def detect_faces(self, frame):
+        # detects faces using Viola-Jones algorithm logic.
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         # More sensitive settings for live view
         detected = self.face_cascade.detectMultiScale(gray, 1.1, 3, minSize=(20, 20))
