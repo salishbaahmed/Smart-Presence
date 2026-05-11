@@ -4,7 +4,7 @@ Settings Management Module
 Handles SQLite-based persistence for application configurations.
 Includes a caching layer to minimize database I/O and provides 
 safe fallbacks to default values
-""""
+"""
 
 import sqlite3
 import logging
