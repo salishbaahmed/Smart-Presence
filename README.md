@@ -49,7 +49,7 @@ SmartPresence replaces manual roll calls with a camera-based system that:
 
 ### Core AI
 
-- **Real-time face recognition** using dlib's 128-dim face encoding
+- **Real-time face recognition** using OpenCV Haar Cascade for detection and dlib's 128-dim face encoding for recognition
 - **dlib correlation tracking** to maintain identity across frames without re-running recognition every frame
 - **Configurable thresholds** (detection scale, recognition tolerance, late/disappear timers)
 
@@ -97,7 +97,7 @@ SmartPresence replaces manual roll calls with a camera-based system that:
 
 | Layer | Technology | Why |
 |-------|-----------|-----|
-| **Face Detection** | dlib (HOG/CNN) | Industry-standard, accurate face detection |
+| **Face Detection** | OpenCV Haar Cascade | Efficient, lightweight face detection |
 | **Face Recognition** | face_recognition lib | Simplified dlib wrapper, 128-dim encodings |
 | **Tracking** | dlib correlation_tracker | Inter-frame face position tracking (DCF) |
 | **Image Processing** | OpenCV | Camera capture, frame manipulation |
@@ -123,7 +123,6 @@ SmartPresence replaces manual roll calls with a camera-based system that:
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/SAA2007/SmartPresence.git
 cd SmartPresence
 
 # 2. Create virtual environment (recommended)

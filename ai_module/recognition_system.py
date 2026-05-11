@@ -47,6 +47,8 @@ class FaceSystemThreaded:
         self.session_logged = {}
         self.last_seen = {}
         self.last_disappear_check = 0
+        self.last_active_schedule_id = None
+        self.reports_sent_today = set()  # set of (schedule_id, date_str)
 
         self.sync_students_to_db()
 
@@ -206,13 +208,55 @@ class FaceSystemThreaded:
 
     def maybe_reset_session(self, schedule):
         if schedule is None:
+            # Check if a class just ended
+            if self.last_active_schedule_id is not None:
+                self._trigger_auto_report(self.last_active_schedule_id)
+                self.last_active_schedule_id = None
             return
-        new_key = f"_schedule_{schedule.get('id')}_{schedule.get('start_time')}"
+
+        new_sched_id = schedule.get('id')
+        
+        # If we switched from one class to another without a gap
+        if self.last_active_schedule_id is not None and self.last_active_schedule_id != new_sched_id:
+            self._trigger_auto_report(self.last_active_schedule_id)
+
+        self.last_active_schedule_id = new_sched_id
+        
+        new_key = f"_schedule_{new_sched_id}_{schedule.get('start_time')}"
         if not hasattr(self, '_current_schedule_key') or self._current_schedule_key != new_key:
             self._current_schedule_key = new_key
             self.session_logged.clear()
             self.last_seen.clear()
             log.info(f"New class session: {schedule.get('class_name')}")
+
+    def _trigger_auto_report(self, schedule_id):
+        """Trigger the email report for a finished class."""
+        if schedule_id == -1: # Manual mode
+            return
+            
+        today = datetime.now().strftime('%Y-%m-%d')
+        report_key = (schedule_id, today)
+        
+        if report_key in self.reports_sent_today:
+            return
+            
+        log.info(f"Class session ended. Triggering auto-report for schedule {schedule_id}...")
+        
+        def send_async():
+            try:
+                from web_app.email_service import generate_and_send_class_report
+                result = generate_and_send_class_report(schedule_id, common.DB_PATH)
+                if result.get('success'):
+                    log.info(f"Auto-report sent successfully for {result.get('class_name')}")
+                    self.reports_sent_today.add(report_key)
+                else:
+                    log.error(f"Auto-report failed: {result.get('error')}")
+            except Exception as e:
+                log.error(f"Error in auto-report thread: {e}")
+
+        # Run in a separate thread to not block the AI loop
+        threading.Thread(target=send_async, daemon=True).start()
+
 
     # ── AI Loop ──────────────────────────────────────────
 

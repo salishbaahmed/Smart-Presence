@@ -152,3 +152,96 @@ def send_error_report(error_title, error_details):
     </div>
     """
     return _send_email(cfg['admin_email'], f"SmartPresence Error: {error_title}", html)
+
+def generate_and_send_class_report(schedule_id, db_path):
+    """
+    Generate and send attendance reports for a specific class schedule.
+    Returns a status dict.
+    """
+    import sqlite3
+    conn = sqlite3.connect(db_path)
+    conn.row_factory = sqlite3.Row
+
+    # Get the schedule
+    sched = conn.execute("SELECT * FROM class_schedules WHERE id = ?", (schedule_id,)).fetchone()
+    if not sched:
+        conn.close()
+        return {"error": "Schedule not found"}
+
+    class_name = sched['class_name']
+    teacher_email = sched['teacher_email'] if 'teacher_email' in sched.keys() else ''
+    today = datetime.now().strftime('%Y-%m-%d')
+
+    # Get all attendance logs for today linked to this schedule
+    logs = conn.execute("""
+        SELECT al.*, s.name, s.email as student_email, s.student_id as sid
+        FROM attendance_logs al
+        JOIN students s ON al.student_id = s.id
+        WHERE al.schedule_id = ? AND date(al.timestamp) = ?
+    """, (schedule_id, today)).fetchall()
+
+    # Get ALL enrolled students to determine who's absent
+    all_students = conn.execute("SELECT id, name, email FROM students").fetchall()
+    conn.close()
+
+    # Build present/absent lists
+    present_ids = set()
+    present_list = []
+    absent_list = []
+    student_statuses = {}  # id -> (name, email, status)
+
+    for log in logs:
+        sid = log['student_id']
+        present_ids.add(sid)
+        status = log['status']
+        student_statuses[sid] = (log['name'], log['student_email'], status)
+        if status in ('Present', 'On Time', 'Late'):
+            present_list.append(log['name'])
+        else:
+            absent_list.append(log['name'])
+
+    # Students with no log at all = Absent
+    for s in all_students:
+        if s['id'] not in present_ids:
+            absent_list.append(s['name'])
+            student_statuses[s['id']] = (s['name'], s['email'], 'Absent')
+
+    # Send individual student emails
+    sent_count = 0
+    fail_count = 0
+    errors = []
+
+    for sid, (name, email, status) in student_statuses.items():
+        if email:
+            ok, err = send_student_report(email, name, class_name, status, today)
+            if ok:
+                sent_count += 1
+            else:
+                fail_count += 1
+                errors.append(f"{name}: {err}")
+
+    # Send teacher summary
+    teacher_sent = False
+    if teacher_email:
+        ok, err = send_teacher_summary(teacher_email, class_name, today, present_list, absent_list)
+        teacher_sent = ok
+        if not ok:
+            errors.append(f"Teacher: {err}")
+
+    # If any errors, send error report to admin
+    if errors:
+        send_error_report(
+            f"Email Report Errors — {class_name}",
+            '\n'.join(errors)
+        )
+
+    return {
+        "success": True,
+        "class_name": class_name,
+        "date": today,
+        "students_emailed": sent_count,
+        "students_failed": fail_count,
+        "teacher_emailed": teacher_sent,
+        "present": len(present_list),
+        "absent": len(absent_list)
+    }

@@ -142,13 +142,13 @@
             <td class="text-muted">${escapeHtml(s.student_id) || '—'}</td>
             <td class="text-muted">${escapeHtml(s.email) || '—'}</td>
             <td class="text-muted small">${escapeHtml(s.notes) || '—'}</td>
-            <td class="text-muted small">${new Date(s.created_at).toLocaleDateString('en-GB')}</td>
+            <td class="text-muted small">${s.created_at ? new Date(s.created_at).toLocaleDateString('en-GB') : '—'}</td>
             <td>
                 <a href="/student/${s.id}" class="btn btn-outline-info btn-xs" title="View Profile"><i class="bi bi-eye"></i></a>
                 <button class="btn btn-outline-light btn-xs" onclick="editStudent(${s.id})">
                     <i class="bi bi-pencil"></i>
                 </button>
-                <button class="btn btn-outline-danger btn-xs" onclick="deleteStudent(${s.id}, '${escapeHtml(s.name).replace(/'/g, "\\'")}')">
+                <button class="btn btn-outline-danger btn-xs" onclick="deleteStudent(${s.id}, \`${escapeHtml(s.name).replace(/`/g, "\\`") }\`)">
                     <i class="bi bi-trash"></i>
                 </button>
             </td>
@@ -223,15 +223,16 @@
         });
     }
 
-    function deleteStudent(id, name) {
-        if (!confirm(`Delete "${name}" and ALL their attendance records? This cannot be undone.`)) return;
+    function deleteStudent(id) {
+        if (!confirm('Delete this student and ALL their attendance records? This cannot be undone.')) return;
         safeFetch(`/api/students/${id}`, { method: 'DELETE' })
             .then(r => {
                 if (!r) return;
                 return r.json();
-            }).then(data => {
+            })
+            .then(data => {
                 if (!data) return;
-                showToast(`${name} deleted`, 'success');
+                showToast('Student deleted', 'success');
                 loadStudents();
             });
     }
