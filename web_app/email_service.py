@@ -4,15 +4,14 @@ SmartPresence — Email Service (Brevo SMTP)
 Handles three types of emails:
  1. Student reports  → individual attendance status after each class
  2. Teacher summaries → class attendance overview (present/absent counts)
- 3. Error reports    → bugs/crashes → admin email
-"""
+ 3. Error reports    → bugs/crashes → admin email """
+
 
 import os
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime
-
 
 def _get_smtp_config():
     """Load SMTP configuration from environment variables."""
@@ -32,9 +31,11 @@ def _send_email(to_email, subject, html_body):
     if not cfg['login'] or not cfg['key'] or not cfg['sender']:
         return False, "SMTP not configured (missing SMTP_LOGIN, SMTP_KEY, or SMTP_SENDER in .env)"
 
+    #validate recipient email
     if not to_email:
         return False, "No recipient email provided"
 
+    #create multipart email
     msg = MIMEMultipart('alternative')
     msg['From'] = f"SmartPresence <{cfg['sender']}>"
     msg['To'] = to_email

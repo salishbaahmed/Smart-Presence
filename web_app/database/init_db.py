@@ -15,6 +15,7 @@ def init_db():
     with sqlite3.connect(DB_PATH) as conn:
         conn.execute("PRAGMA foreign_keys = ON")
 
+    
         # Apply schema (IF NOT EXISTS safe for re-runs)
         with open(SCHEMA_PATH, 'r') as f:
             conn.executescript(f.read())

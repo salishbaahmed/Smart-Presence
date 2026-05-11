@@ -4,13 +4,14 @@ import time
 import sys
 import os
 
+#add project root to Python path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from ai_module import common
 from ai_module.recognition_system import FaceSystemThreaded
 from ai_module.settings import SettingsManager
 
+#logger for stream-related events/errors
 log = common.get_logger('stream')
-
 
 class VideoStream:
     """
@@ -64,10 +65,12 @@ class VideoStream:
         self._threads.clear()
         log.info("Video stream stopped.")
 
+
     def restart(self):
         """Stop then start."""
         self.stop()
         time.sleep(0.5)
+
         # Reload encodings in case new students were added
         self.face_system = FaceSystemThreaded()
         self.start()
@@ -119,7 +122,7 @@ class VideoStream:
 
             try:
                 log.info(f"Opening camera: {name} (Source: {source})...")
-                # Try MSMF backend on Windows, or default ANY
+                #use MSMF backend on Windows for better compatibility
                 backend = cv2.CAP_MSMF if os.name == 'nt' and isinstance(source, int) else cv2.CAP_ANY
                 cap = cv2.VideoCapture(source, backend)
                 

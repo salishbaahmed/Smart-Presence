@@ -1,5 +1,4 @@
 -- SmartPresence Schema v4 (Beta)
-
 CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT NOT NULL UNIQUE,
@@ -18,6 +17,7 @@ CREATE TABLE IF NOT EXISTS students (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- class_schedules table
 CREATE TABLE IF NOT EXISTS class_schedules (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     day_of_week TEXT NOT NULL,
@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS class_schedules (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- attendance_logs table
 CREATE TABLE IF NOT EXISTS attendance_logs (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     student_id INTEGER NOT NULL,

@@ -33,14 +33,15 @@ class CameraManager:
                     return dict(row)
         except Exception as e:
             common.get_logger('camera_manager').error(f"Failed to fetch camera config: {e}")
-        
+       
         # Fallback to defaults if DB fails or no camera found
         return {
             'source': str(common.CAMERA_ID),
             'type': 'usb',
             'name': 'Default Camera'
         }
-
+ 
+       
     @staticmethod
     def get_all_cameras():
         """List all cameras for API."""
